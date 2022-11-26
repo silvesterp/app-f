@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: flask-deploy
+ labels:
+  name: flaskapp
+spec:
+ replicas: 4
+ selector:
+  matchLabels:
+   name: flaskapp
+ template:
+  metadata:
+    name: flaskapp
+    labels:
+      name: flaskapp
+  spec:
+   containers:
+   - image: silvesterp/flaskapp:latest
+     imagePullPolicy: Always
+     name: flaskapp
+     ports:
+     - containerPort: 8080
+
