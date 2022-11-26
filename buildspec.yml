@@ -28,5 +28,7 @@ phases:
       - export AWS_EXPIRATION=900
       - aws eks update-kubeconfig --name newcluster
       - kubectl apply -f deploy.yaml --force
-      - kubectl rollout restart deploy  webapp-deploy
+      - kubectl rollout restart deploy  flask-deploy
       - kubectl apply -f service.yaml
+      - sleep 10s
+      - kubectl get svc
