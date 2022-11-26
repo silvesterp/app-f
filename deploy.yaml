@@ -21,5 +21,4 @@ spec:
      name: flaskapp
      ports:
      - containerPort: 8080
-       targetPort: 5000 
 
