@@ -21,7 +21,7 @@ phases:
       - echo Building the Docker image...
       - docker image build -t flaskapp:latest .
       - echo Running Trivy scan on the Docker image...
-      - trivy --exit-code 1 --severity CRITICAL,HIGH flaskapp:latest
+      - trivy --exit-status 1 --severity CRITICAL,HIGH flaskapp:latest
       - docker tag flaskapp:latest silvesterp/flaskapp:latest
   post_build:
     commands:
