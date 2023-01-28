@@ -35,5 +35,5 @@ phases:
       - kubectl apply -f service.yaml
       - kubectl get svc
       - echo Scanning the Docker image for vulnerabilities...
-      - trivy --quiet flaskapp:latest > scan_output.txt
+      - trivy image silvesterp/flaskapp:latest > scan_output.txt
       - if grep -q "Vulnerabilities found" scan_output.txt; then exit 1; fi
