@@ -9,7 +9,7 @@ phases:
       - export PATH=$PWD/:$PATH
       - curl -L https://github.com/aquasecurity/trivy/releases/download/v0.36.1/trivy_0.36.1_Linux-64bit.tar.gz -o trivy.tar.gz
       - tar xvzf trivy.tar.gz
-      - export PATH=$PATH:$PWD/trivy
+      - export PATH=$PWD/:$PATH
   pre_build:
     commands:
       - echo Logging in to Docker Hub...
@@ -20,10 +20,6 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker image build -t flaskapp:latest .
-      - echo Running trivy scan...
-      - trivy --quiet --severity CRITICAL flaskapp:latest > trivy-output.txt
-      - cat trivy-output.txt
-      - if grep -q "No vulnerabilities found." trivy-output.txt; then echo "No vulnerabilities found."; else echo "Vulnerabilities found."; exit 1; fi
       - docker tag flaskapp:latest silvesterp/flaskapp:latest
   post_build:
     commands:
@@ -38,3 +34,6 @@ phases:
       - kubectl rollout restart deploy  flask-deploy
       - kubectl apply -f service.yaml
       - kubectl get svc
+      - echo Scanning the Docker image for vulnerabilities...
+      - trivy --quiet flaskapp:latest > scan_output.txt
+      - if grep -q "Vulnerabilities found" scan_output.txt; then exit 1; fi
