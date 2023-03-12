@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: flaskapp-serveic
+  name: flaskapp-service
 spec:
   selector:
    name: flaskapp
